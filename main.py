@@ -1,8 +1,6 @@
-from damgard_jurik import keygen
+from ObliviousTransfer.core import Stash
 
-# Generate a key pair
-public_key, private_key = keygen(s=1024)
+stash = Stash()
 
-# Print the public key
-print(public_key)
-print(private_key)
+stash.push(2, 3)
+print(stash.stash[1][4])
