@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8af70092-86c2-42c8-a997-9a53fd908e78" name="Changes" comment="Add Bucket, Stash">
-      <change afterPath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="8af70092-86c2-42c8-a997-9a53fd908e78" name="Changes" comment="Implement Stash and started with cloud side">
+      <change afterPath="$PROJECT_DIR$/ObliviousTransfer/chats.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ObliviousTransfer/whales.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ObliviousTransfer/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ObliviousTransfer/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/core.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -49,6 +51,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.chats.executor": "Run",
     "Python.core.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -58,7 +61,29 @@
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
+    <configuration name="chats" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ObliviousTransfer" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ObliviousTransfer" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ObliviousTransfer/chats.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="ObliviousTransfer" />
       <option name="ENV_FILES" value="" />
@@ -82,6 +107,11 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.chats" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -108,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738864598191</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Implement Stash and started with cloud side">
+      <option name="closed" value="true" />
+      <created>1739075701149</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1739075701149</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -125,6 +163,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Add Bucket, Stash" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Bucket, Stash" />
+    <MESSAGE value="Implement Stash and started with cloud side" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement Stash and started with cloud side" />
   </component>
 </project>
