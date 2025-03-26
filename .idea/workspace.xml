@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8af70092-86c2-42c8-a997-9a53fd908e78" name="Changes" comment="Fixed stash, positionmap, cloud tree. started with MCS system">
-      <change afterPath="$PROJECT_DIR$/MARKDOWN.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sample_cloud.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ObliviousTransfer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ObliviousTransfer.iml" afterDir="false" />
+    <list default="true" id="8af70092-86c2-42c8-a997-9a53fd908e78" name="Changes" comment="Add MARKDOWN.md. client.py, sample_cloud.py. want to fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ObliviousTransfer/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ObliviousTransfer/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/core.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample_cloud.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740329703478</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add MARKDOWN.md. client.py, sample_cloud.py. want to fix">
+      <option name="closed" value="true" />
+      <created>1742966244316</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1742966244316</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,6 +178,7 @@
     <MESSAGE value="Add Bucket, Stash" />
     <MESSAGE value="Implement Stash and started with cloud side" />
     <MESSAGE value="Fixed stash, positionmap, cloud tree. started with MCS system" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed stash, positionmap, cloud tree. started with MCS system" />
+    <MESSAGE value="Add MARKDOWN.md. client.py, sample_cloud.py. want to fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add MARKDOWN.md. client.py, sample_cloud.py. want to fix" />
   </component>
 </project>

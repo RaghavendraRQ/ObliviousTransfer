@@ -42,6 +42,11 @@ class CloudTree:
             s += f"Level {level}: " + str(buckets) + "\n"
         return s
 
+"""
+Position map will store the location of each item in the tree.
+Updated when items are moved (to maintain obliviousness).
+Removes entries when items are deleted.
+"""
 
 class PositionMap:
     def __init__(self):
@@ -55,6 +60,18 @@ class PositionMap:
             del self.map[key]
     def __repr__(self):
         return str(self.map)
+
+
+"""
+Temporarily holds items before they are written back to the tree.
+Items are stored in a 2D matrix (t x Z) where t is the number of rows and Z is the number of columns.
+
+Methods:
+- push: Add a new item to the stash.
+- update: Update an item in the stash.
+- get: Retrieve an item from the stash.
+- pop: Remove and return an item from the stash.
+"""
 
 
 class Stash:
