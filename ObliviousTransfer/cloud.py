@@ -12,13 +12,11 @@ class MobileCloudStorageSystem:
         t: Number of stash rows; Z: number of stash columns.
         items: initial list of (key, value) tuples.
         """
-        self.config = Config(L, t, Z)
+        self.config = Config(L, t, Z, temp_window=3)
         self.L = L
 
-        # Generate Damgård–Jurik key pair (encryption details abstracted)
         self.public_key, self.private_key = damgard_jurik.keygen(1024)
 
-        # Initialize data structures.
         self.tree = CloudTree(L)
         self.stash = Stash(t, Z)
         self.pm = PositionMap()
@@ -40,7 +38,6 @@ class MobileCloudStorageSystem:
             loc = possible_locations.pop()
             self.pm.update(key, loc)
             self.tree.update_node(loc[0], loc[1], Bucket(key, value))
-        # (Buckets not assigned remain as dummies.)
 
     def access(self, op, key, v_new=None):
         """
@@ -58,14 +55,12 @@ class MobileCloudStorageSystem:
              Update the position map accordingly.
           5. Return the original value.
         """
-        # Step 1: Try to retrieve from stash.
         stash_val = self.stash.get(key)
         if stash_val is not None:
             current_item = (key, stash_val)
         else:
             location = self.pm.get(key)
             if location is None:
-                # For a new insertion ('put'), we treat missing as (key, None).
                 if op == 'put':
                     current_item = (key, None)
                 else:
@@ -74,32 +69,24 @@ class MobileCloudStorageSystem:
                 level, index = location
                 bucket = self.tree.get_node(level, index)
                 current_item = (bucket.key, bucket.value)
-                # Push the fetched item into the stash.
                 self.stash.push(bucket.key, bucket.value)
-                # Mark the tree bucket as dummy.
                 self.tree.update_node(level, index, Bucket())
         orig_value = current_item[1]
 
-        # Step 2: Process the operation.
         if op == 'put':
-            # Update the item in the stash.
             self.stash.update(key, v_new)
             current_item = (key, v_new)
         elif op == 'remove':
-            # Set the value to None and remove from the position map.
             self.stash.update(key, None)
             self.pm.remove(key)
             current_item = (key, None)
-        # For 'get', no update is made.
 
-        # Step 3: Evict one item from the stash and write it back.
         popped = self.stash.pop()
         if popped is not None and popped.k is not None:
             dummies = self.tree.get_dummy_locations()
             if dummies:
                 new_loc = random.choice(dummies)
             else:
-                # If no dummy exists (unlikely), choose any random location.
                 new_loc = random.choice(self.tree.get_all_locations())
             self.tree.update_node(new_loc[0], new_loc[1], Bucket(popped.k, popped.v))
             self.pm.update(popped.k, new_loc)

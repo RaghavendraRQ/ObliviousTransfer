@@ -1,5 +1,3 @@
-# Binary Tree Implementation in Cloud Side
-
 
 class Bucket:
     def __init__(self, key=None, value=None):
@@ -45,8 +43,6 @@ class CloudTree:
         return s
 
 
-# Position Map dictionary and maps the mobile cloud storage system from logical key of item to physical storage location
-# For a key k of an item, the position map pm[k] returns a location tuple (l,p) indicated that the item may be located at the P(l,p) node of T
 class PositionMap:
     def __init__(self):
         self.map = {}  # key -> (level, index)
@@ -61,7 +57,6 @@ class PositionMap:
         return str(self.map)
 
 
-# Stash is a temporary storage location for the items that are not updated into the cloud storage system
 class Stash:
     class Item:
         def __init__(self, key=None, value=None):

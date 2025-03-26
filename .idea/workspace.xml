@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8af70092-86c2-42c8-a997-9a53fd908e78" name="Changes" comment="Implement Stash and started with cloud side">
-      <change afterPath="$PROJECT_DIR$/ObliviousTransfer/chats.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ObliviousTransfer/whales.py" afterDir="false" />
+    <list default="true" id="8af70092-86c2-42c8-a997-9a53fd908e78" name="Changes" comment="Fixed stash, positionmap, cloud tree. started with MCS system">
+      <change afterPath="$PROJECT_DIR$/MARKDOWN.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sample_cloud.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ObliviousTransfer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ObliviousTransfer.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ObliviousTransfer/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/constants.py" afterDir="false" />
@@ -49,18 +52,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.chats.executor": "Run",
-    "Python.core.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/raghavendra/Myworkspace/CyberSecurity/ObliviousTransfer/main.py",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.chats.executor&quot;: &quot;Run&quot;,
+    &quot;Python.core.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/raghavendra/Myworkspace/CyberSecurity/ObliviousTransfer/main.py&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.main">
     <configuration name="chats" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ObliviousTransfer" />
@@ -146,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739075701149</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed stash, positionmap, cloud tree. started with MCS system">
+      <option name="closed" value="true" />
+      <created>1740329703478</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740329703478</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -164,6 +175,7 @@
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Add Bucket, Stash" />
     <MESSAGE value="Implement Stash and started with cloud side" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement Stash and started with cloud side" />
+    <MESSAGE value="Fixed stash, positionmap, cloud tree. started with MCS system" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed stash, positionmap, cloud tree. started with MCS system" />
   </component>
 </project>
