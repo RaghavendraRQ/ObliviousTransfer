@@ -1,99 +1,129 @@
-from ObliviousTransfer.core import Stash, PositionMap, CloudTree, Bucket
-from ObliviousTransfer.constants import Config
-import damgard_jurik.crypto as damgard_jurik
+from damgard_jurik.crypto import PublicKey, EncryptedNumber, keygen
 import random
+from typing import List, Tuple, Optional
+from ObliviousTransfer.core import Stash, PositionMap
 
 
-
-class MobileCloudStorageSystem:
-    def __init__(self, L, t, Z, items):
-        """
-        L: Tree height (tree has L+1 levels).
-        t: Number of stash rows; Z: number of stash columns.
-        items: initial list of (key, value) tuples.
-        """
-        self.config = Config(L, t, Z, temp_window=3)
+class CloudTree:
+    def __init__(self, L: int):
         self.L = L
+        self.levels = []
+        for level in range(L + 1):
+            self.levels.append([[] for _ in range(2 ** level)])
 
-        self.public_key, self.private_key = damgard_jurik.keygen(1024)
+    def update_node(self, level: int, index: int, bucket: List[EncryptedNumber]):
+        self.levels[level][index] = bucket
 
+    def get_node(self, level: int, index: int) -> List[EncryptedNumber]:
+        return self.levels[level][index]
+
+    def get_all_locations(self) -> List[Tuple[int, int]]:
+        locations = []
+        for level in range(self.L + 1):
+            for idx in range(2 ** level):
+                locations.append((level, idx))
+        return locations
+
+    def get_dummy_locations(self) -> List[Tuple[int, int]]:
+        return [(lvl, idx) for lvl in range(len(self.levels))
+                for idx, bucket in enumerate(self.levels[lvl])
+                if not bucket]
+
+
+class MobileCloudClient:
+    def __init__(self, L: int, s: int = 1, n_bits: int = 1024):
+        self.L = L
+        self.s = s
+        self.public_key, self.private_key_ring = keygen(
+            n_bits=n_bits,
+            s=s,
+            threshold=3,
+            n_shares=3
+        )
         self.tree = CloudTree(L)
-        self.stash = Stash(t, Z)
-        self.pm = PositionMap()
+        self.position_map = PositionMap()
+        self.stash: Stash = Stash(100)
 
-        # Run the initialization algorithm.
-        self.init_system(items)
+    def _bytes_to_int(self, data: bytes) -> List[int]:
+        chunk_size = (self.public_key.n.bit_length() // 8) - 1
+        return [int.from_bytes(data[i:i + chunk_size], 'big')
+                for i in range(0, len(data), chunk_size)]
 
-    def init_system(self, items):
-        """
-        Initialization:
-          For each (key, value) in items, assign it to a unique bucket
-          in the tree (from the set of all nodes) and update the position map.
-        """
-        possible_locations = self.tree.get_all_locations()  # All (level, index) pairs.
-        random.shuffle(possible_locations)
-        for (key, value) in items:
-            if not possible_locations:
-                raise Exception("Not enough tree nodes to store all items!")
-            loc = possible_locations.pop()
-            self.pm.update(key, loc)
-            self.tree.update_node(loc[0], loc[1], Bucket(key, value))
+    def _int_to_bytes(self, integers: List[int]) -> bytes:
+        chunk_size = (self.public_key.n.bit_length() // 8) - 1
+        return b''.join(num.to_bytes(chunk_size, 'big') for num in integers)
 
-    def access(self, op, key, v_new=None):
-        """
-        Access protocol (simplified simulation of OSU):
-          - op: 'get', 'put', or 'remove'
-          - key: key to operate on
-          - v_new: for 'put', the new value
+    def _encrypt_bucket(self, data: bytes) -> List[EncryptedNumber]:
+        chunks = self._bytes_to_int(data)
+        return self.public_key.encrypt_list(chunks)
 
-        Steps:
-          1. If the item is not in the stash, use the position map to fetch it from the tree.
-             (If found, push it into the stash and mark the tree bucket as dummy.)
-          2. Record the original value.
-          3. For 'put', update the value; for 'remove', set value to None and remove from pm.
-          4. Pop an item from the stash and write it back into a randomly chosen dummy bucket in the tree.
-             Update the position map accordingly.
-          5. Return the original value.
-        """
-        stash_val = self.stash.get(key)
-        if stash_val is not None:
-            current_item = (key, stash_val)
+    def _decrypt_bucket(self, bucket: List[EncryptedNumber]) -> bytes:
+        decrypted = self.private_key_ring.decrypt_list(bucket)
+        return self._int_to_bytes(decrypted)
+
+    def initialize(self, items: List[Tuple[str, bytes]]):
+        locs = self.tree.get_all_locations()
+        random.shuffle(locs)
+
+        for key, value in items:
+            if not locs:
+                raise RuntimeError("Not enough buckets for initialization")
+            level, idx = locs.pop()
+            encrypted = self._encrypt_bucket(value)
+            self.tree.update_node(level, idx, encrypted)
+            self.position_map.update(key, (level, idx))
+
+        for level, idx in locs:
+            self.tree.update_node(level, idx, [])
+
+    def _oblivious_access(self, op: str, key: str, value: Optional[bytes] = None) -> Optional[bytes]:
+        orig_loc = self.position_map.get(key)
+        new_loc = random.choice(self.tree.get_dummy_locations())
+
+        if orig_loc:
+            encrypted = self.tree.get_node(*orig_loc)
+            decrypted = self._decrypt_bucket(encrypted)
+
+            if op == 'put':
+                decrypted = self._bytes_to_int(value)
+                re_encrypted = self.public_key.encrypt_list(decrypted)
+                self.tree.update_node(new_loc[0], new_loc[1], re_encrypted)
+                self.position_map.update(key, new_loc)
+            elif op == 'remove':
+                decrypted = []
+                self.position_map.remove(key)
+                self.tree.update_node(orig_loc[0], orig_loc[1], decrypted)
+
+            if op == 'get':
+                return self._int_to_bytes(decrypted)
         else:
-            location = self.pm.get(key)
-            if location is None:
-                if op == 'put':
-                    current_item = (key, None)
-                else:
-                    return None
-            else:
-                level, index = location
-                bucket = self.tree.get_node(level, index)
-                current_item = (bucket.key, bucket.value)
-                self.stash.push(bucket.key, bucket.value)
-                self.tree.update_node(level, index, Bucket())
-        orig_value = current_item[1]
+            if op == 'put':
+                encrypted = self._encrypt_bucket(value)
+                self.tree.update_node(new_loc[0], new_loc[1], encrypted)
+                self.position_map.update(key, new_loc)
 
-        if op == 'put':
-            self.stash.update(key, v_new)
-            current_item = (key, v_new)
-        elif op == 'remove':
-            self.stash.update(key, None)
-            self.pm.remove(key)
-            current_item = (key, None)
+        return None
 
-        popped = self.stash.pop()
-        if popped is not None and popped.k is not None:
-            dummies = self.tree.get_dummy_locations()
-            if dummies:
-                new_loc = random.choice(dummies)
-            else:
-                new_loc = random.choice(self.tree.get_all_locations())
-            self.tree.update_node(new_loc[0], new_loc[1], Bucket(popped.k, popped.v))
-            self.pm.update(popped.k, new_loc)
-        return orig_value
+    def get(self, key: str) -> Optional[bytes]:
+        return self._oblivious_access('get', key)
 
-    def __repr__(self):
-        s = "===== Binary Tree =====\n" + str(self.tree)
-        s += "\n===== Stash =====\n" + str(self.stash)
-        s += "\n===== Position Map =====\n" + str(self.pm)
-        return s
+    def put(self, key: str, value: bytes):
+        self._oblivious_access('put', key, value)
+
+    def remove(self, key: str):
+        self._oblivious_access('remove', key)
+
+
+class CloudStorageServer:
+    def __init__(self):
+        self.tree: Optional[CloudTree] = None
+        self.public_key: Optional[PublicKey] = None
+
+    def store_tree(self, tree: CloudTree, public_key: PublicKey):
+        self.tree = tree
+        self.public_key = public_key
+
+    def get_encrypted_path(self, level: int) -> List[List[EncryptedNumber]]:
+        if not self.tree or level >= len(self.tree.levels):
+            return []
+        return self.tree.levels[level]

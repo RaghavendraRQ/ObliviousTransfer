@@ -1,142 +1,81 @@
+from typing import List, Tuple, Optional, Dict
 
-class Bucket:
-    def __init__(self, key=None, value=None):
-        self.key = key
-        self.value = value
+
+class EncryptedBucket:
+    def __init__(self, ciphertexts: List[int] = None):
+        self.ciphertexts = ciphertexts or []
+
     def __repr__(self):
-        return f"({self.key}, {self.value})"
+        return f"EncryptedBucket({len(self.ciphertexts)} ciphertexts)"
+
 
 class CloudTree:
-    def __init__(self, L):
+    def __init__(self, L: int):
         self.L = L
         self.levels = []
         for level in range(L + 1):
-            self.levels.append([Bucket() for _ in range(2 ** level)])
+            self.levels.append([EncryptedBucket() for _ in range(2 ** level)])
 
-    def update_node(self, level, index, bucket):
+    def update_node(self, level: int, index: int, bucket: EncryptedBucket):
         self.levels[level][index] = bucket
 
-    def get_node(self, level, index):
+    def get_node(self, level: int, index: int) -> EncryptedBucket:
         return self.levels[level][index]
 
-    def get_dummy_locations(self):
-        """Return a list of (level, index) for all buckets that are currently dummy."""
+    def get_dummy_locations(self) -> List[Tuple[int, int]]:
         locations = []
         for level in range(self.L + 1):
-            for index, bucket in enumerate(self.levels[level]):
-                if bucket.key is None:
-                    locations.append((level, index))
+            for idx, bucket in enumerate(self.levels[level]):
+                if not bucket.ciphertexts:
+                    locations.append((level, idx))
         return locations
 
-    def get_all_locations(self):
-        """Return a list of all possible (level, index) pairs in the tree."""
+    def get_all_locations(self) -> List[Tuple[int, int]]:
         locations = []
         for level in range(self.L + 1):
-            for index in range(2 ** level):
-                locations.append((level, index))
+            for idx in range(2 ** level):
+                locations.append((level, idx))
         return locations
 
     def __repr__(self):
-        s = ""
-        for level, buckets in enumerate(self.levels):
-            s += f"Level {level}: " + str(buckets) + "\n"
-        return s
+        return "\n".join(f"Level {i}: {lvl}" for i, lvl in enumerate(self.levels))
 
-"""
-Position map will store the location of each item in the tree.
-Updated when items are moved (to maintain obliviousness).
-Removes entries when items are deleted.
-"""
 
 class PositionMap:
     def __init__(self):
-        self.map = {}  # key -> (level, index)
-    def update(self, key, location):
+        self.map: Dict[str, Tuple[int, int]] = {}
+
+    def update(self, key: str, location: Tuple[int, int]):
         self.map[key] = location
-    def get(self, key):
-        return self.map.get(key, None)
-    def remove(self, key):
+
+    def get(self, key: str) -> Optional[Tuple[int, int]]:
+        return self.map.get(key)
+
+    def remove(self, key: str):
         if key in self.map:
             del self.map[key]
+
     def __repr__(self):
         return str(self.map)
 
 
-"""
-Temporarily holds items before they are written back to the tree.
-Items are stored in a 2D matrix (t x Z) where t is the number of rows and Z is the number of columns.
-
-Methods:
-- push: Add a new item to the stash.
-- update: Update an item in the stash.
-- get: Retrieve an item from the stash.
-- pop: Remove and return an item from the stash.
-"""
-
-
 class Stash:
-    class Item:
-        def __init__(self, key=None, value=None):
-            self.k = key
-            self.v = value
-        def __repr__(self):
-            return f"({self.k}, {self.v})"
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.items = []
 
-    def __init__(self, t, Z):
-        self.t = t  # Number of rows
-        self.Z = Z  # Number of columns in each row
-        self.matrix = [[Stash.Item() for _ in range(Z)] for _ in range(t)]
+    def add(self, key: str, value: bytes):
+        if len(self.items) < self.capacity:
+            self.items.append((key, value))
 
-    def push(self, key, value):
-        """Push a new (key, value) into the bottom row (row index t-1) into the first free slot."""
-        row = self.t - 1
-        for j in range(self.Z):
-            if self.matrix[row][j].k is None:
-                self.matrix[row][j] = Stash.Item(key, value)
-                return 0
+    def get(self, key: str) -> Optional[bytes]:
+        for k, v in self.items:
+            if k == key:
+                return v
         return None
 
-    def update(self, key, value):
-        """Update an item with the given key in the stash."""
-        for i in range(self.t):
-            for j in range(self.Z):
-                if self.matrix[i][j].k == key:
-                    self.matrix[i][j].v = value
-                    return 0
-        return None
-
-    def get(self, key):
-        """Return the value associated with key in the stash (if any)."""
-        for i in range(self.t):
-            for j in range(self.Z):
-                if self.matrix[i][j].k == key:
-                    return self.matrix[i][j].v
-        return None
-
-    def pop(self):
-        """
-        Remove and return one item from the stash.
-        First, try to remove an item from the top row.
-        If the top row is empty, shift all rows upward and try again.
-        """
-        for j in range(self.Z):
-            if self.matrix[0][j].k is not None:
-                item = self.matrix[0][j]
-                self.matrix[0][j] = Stash.Item()
-                return item
-        for i in range(1, self.t):
-            for j in range(self.Z):
-                self.matrix[i - 1][j] = self.matrix[i][j]
-                self.matrix[i][j] = Stash.Item()
-        for j in range(self.Z):
-            if self.matrix[0][j].k is not None:
-                item = self.matrix[0][j]
-                self.matrix[0][j] = Stash.Item()
-                return item
-        return None
+    def remove(self, key: str):
+        self.items = [(k, v) for k, v in self.items if k != key]
 
     def __repr__(self):
-        s = ""
-        for row in self.matrix:
-            s += str(row) + "\n"
-        return s
+        return str(self.items)
