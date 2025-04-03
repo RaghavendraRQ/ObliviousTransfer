@@ -13,8 +13,7 @@ A secure and privacy-preserving cloud storage system based on the paper:
 | Module          | Description                               |
 |-----------------|-------------------------------------------|
 | `core.py`       | Core (Stash, PositionMap, BinaryTree)     |
-| `client.py`     | Client-side operations (get/put/remove)   |
-| `cloud.py`      | Mobile Cloud Storage                      |
+| `cloud.py`      | Mobile Cloud Client or Storage            |
 | `damgard_jurik` | Homomorphic encryption (External Library) |
 | `main.py`       | Example usage                             |
 

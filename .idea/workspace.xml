@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8af70092-86c2-42c8-a997-9a53fd908e78" name="Changes" comment="Added main.py for demo. Fixed the CloudTree and MCC remove operation.">
-      <change afterPath="$PROJECT_DIR$/ObliviousTransfer/damgard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ObliviousTransfer/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ObliviousTransfer/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" />
+    <list default="true" id="8af70092-86c2-42c8-a997-9a53fd908e78" name="Changes" comment="Remove unnecessary damgard.py and fixed the README.md">
+      <change beforePath="$PROJECT_DIR$/MARKDOWN.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +218,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743695054689</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Remove unnecessary damgard.py and fixed the README.md">
+      <option name="closed" value="true" />
+      <created>1743695235517</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1743695235517</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -246,6 +247,7 @@
     <MESSAGE value="Fixed stash, positionmap, cloud tree. started with MCS system" />
     <MESSAGE value="Add MARKDOWN.md. client.py, sample_cloud.py. want to fix" />
     <MESSAGE value="Added main.py for demo. Fixed the CloudTree and MCC remove operation." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added main.py for demo. Fixed the CloudTree and MCC remove operation." />
+    <MESSAGE value="Remove unnecessary damgard.py and fixed the README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove unnecessary damgard.py and fixed the README.md" />
   </component>
 </project>
