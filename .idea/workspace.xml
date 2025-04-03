@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8af70092-86c2-42c8-a997-9a53fd908e78" name="Changes" comment="Add MARKDOWN.md. client.py, sample_cloud.py. want to fix">
+    <list default="true" id="8af70092-86c2-42c8-a997-9a53fd908e78" name="Changes" comment="Added main.py for demo. Fixed the CloudTree and MCC remove operation.">
       <change afterPath="$PROJECT_DIR$/ObliviousTransfer/damgard.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObliviousTransfer/cloud.py" afterDir="false" />
@@ -217,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742966244316</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added main.py for demo. Fixed the CloudTree and MCC remove operation.">
+      <option name="closed" value="true" />
+      <created>1743695054689</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1743695054689</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -237,6 +245,7 @@
     <MESSAGE value="Implement Stash and started with cloud side" />
     <MESSAGE value="Fixed stash, positionmap, cloud tree. started with MCS system" />
     <MESSAGE value="Add MARKDOWN.md. client.py, sample_cloud.py. want to fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add MARKDOWN.md. client.py, sample_cloud.py. want to fix" />
+    <MESSAGE value="Added main.py for demo. Fixed the CloudTree and MCC remove operation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added main.py for demo. Fixed the CloudTree and MCC remove operation." />
   </component>
 </project>

@@ -27,7 +27,7 @@ class CloudTree:
     def get_dummy_locations(self) -> List[Tuple[int, int]]:
         return [(lvl, idx) for lvl in range(len(self.levels))
                 for idx, bucket in enumerate(self.levels[lvl])
-                if not bucket]  # Check for empty list instead of None
+                if not bucket]
 
 
 class MobileCloudClient:
